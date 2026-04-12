@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 80" fill="none">
+  <rect x="0" y="8" width="64" height="64" rx="12" fill="#1847F0"/>
+  <text x="32" y="52" text-anchor="middle" fill="white" font-family="'Syne', 'Arial Black', sans-serif" font-weight="800" font-size="28">AF</text>
+  <text x="80" y="38" fill="#0D1630" font-family="'Syne', 'Arial Black', sans-serif" font-weight="800" font-size="24">All Family</text>
+  <text x="80" y="62" fill="#1847F0" font-family="'Syne', 'Arial Black', sans-serif" font-weight="700" font-size="14" letter-spacing="0.12em">HEALTH CARE</text>
+</svg>
