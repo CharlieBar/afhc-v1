@@ -1,0 +1,58 @@
+<!--
+  Netlify Forms Detection Page
+  Required for @netlify/plugin-nextjs@5 — Netlify's bot reads this static file
+  to discover form definitions since Next.js pages are server-rendered.
+  See: https://ntl.fyi/next-runtime-forms-migration
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head><title>Forms</title></head>
+<body>
+
+  <!-- Contact Form -->
+  <form name="contact-general" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input name="bot-field" />
+    <input name="form-name" value="contact-general" />
+    <input name="name" />
+    <input name="email" />
+    <input name="phone" />
+    <textarea name="message"></textarea>
+  </form>
+
+  <!-- Free Assessment Form -->
+  <form name="free-assessment" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input name="bot-field" />
+    <input name="form-name" value="free-assessment" />
+    <input name="name" />
+    <input name="email" />
+    <input name="phone" />
+    <input name="service" />
+    <textarea name="message"></textarea>
+  </form>
+
+  <!-- Referral Form -->
+  <form name="referral-form" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input name="bot-field" />
+    <input name="form-name" value="referral-form" />
+    <input name="patientName" />
+    <input name="patientDOB" />
+    <input name="patientPhone" />
+    <input name="referringProvider" />
+    <input name="diagnosis" />
+    <input name="servicesRequested" />
+    <textarea name="notes"></textarea>
+  </form>
+
+  <!-- Caregiver Consultation Form -->
+  <form name="caregiver-consultation" data-netlify="true" netlify-honeypot="bot-field" hidden>
+    <input name="bot-field" />
+    <input name="form-name" value="caregiver-consultation" />
+    <input name="name" />
+    <input name="email" />
+    <input name="phone" />
+    <input name="relationship" />
+    <textarea name="message"></textarea>
+  </form>
+
+</body>
+</html>
