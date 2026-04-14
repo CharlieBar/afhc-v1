@@ -33,31 +33,40 @@ type NavItem = NavItemWithChildren | NavItemWithHref;
 
 // ─── Dropdown ───────────────────────────────────────────────────────────────
 
-function NavDropdown({ item }: { item: NavItemWithChildren }) {
-  const [open, setOpen] = useState(false);
+function NavDropdown({
+  item,
+  isOpen,
+  onOpen,
+  onClose,
+}: {
+  item: NavItemWithChildren;
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+}) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
-        setOpen(false);
+        onClose();
       }
     }
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
-  }, []);
+  }, [onClose]);
 
   return (
     <div ref={ref} className="relative">
       <button
-        onClick={() => setOpen((o) => !o)}
-        onMouseEnter={() => setOpen(true)}
-        aria-expanded={open}
+        onClick={() => (isOpen ? onClose() : onOpen())}
+        onMouseEnter={onOpen}
+        aria-expanded={isOpen}
         aria-haspopup="true"
         className={cn(
           "flex items-center gap-1 rounded-[6px] px-[14px] py-[7px] text-[13px] font-medium text-body transition-colors duration-150",
           "hover:bg-electric-light hover:text-electric",
-          open && "bg-electric-light text-electric"
+          isOpen && "bg-electric-light text-electric"
         )}
       >
         {item.label}
@@ -65,15 +74,15 @@ function NavDropdown({ item }: { item: NavItemWithChildren }) {
           size={14}
           className={cn(
             "transition-transform duration-150",
-            open && "rotate-180"
+            isOpen && "rotate-180"
           )}
           aria-hidden="true"
         />
       </button>
 
-      {open && (
+      {isOpen && (
         <div
-          onMouseLeave={() => setOpen(false)}
+          onMouseLeave={onClose}
           className="absolute left-0 top-full z-50 mt-1 w-72 rounded-xl border border-border bg-surface p-4 shadow-xl"
           role="menu"
         >
@@ -83,7 +92,7 @@ function NavDropdown({ item }: { item: NavItemWithChildren }) {
                 key={child.href}
                 href={child.href}
                 role="menuitem"
-                onClick={() => setOpen(false)}
+                onClick={onClose}
                 className="group flex flex-col rounded-lg px-3 py-2.5 transition-colors duration-150 hover:bg-electric-light"
               >
                 <span className="text-[13px] font-medium text-charcoal group-hover:text-electric">
@@ -146,6 +155,7 @@ function Hamburger({
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   useEffect(() => {
     function handleScroll() {
@@ -186,6 +196,8 @@ export default function Header() {
           {/* ── Logo ── */}
           <Link
             href="/"
+            scroll={true}
+            onClick={() => window.scrollTo({ top: 0 })}
             aria-label={`${site.name} — Home`}
             className="flex shrink-0 items-center gap-2.5"
           >
@@ -212,7 +224,15 @@ export default function Header() {
           >
             {navItems.map((item) => {
               if (item.children) {
-                return <NavDropdown key={item.label} item={item} />;
+                return (
+                  <NavDropdown
+                    key={item.label}
+                    item={item}
+                    isOpen={activeDropdown === item.label}
+                    onOpen={() => setActiveDropdown(item.label)}
+                    onClose={() => setActiveDropdown(null)}
+                  />
+                );
               }
               return (
                 <Link

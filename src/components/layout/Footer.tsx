@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Phone, MapPin, ShieldCheck, Award } from "lucide-react";
 import { footer } from "@/content/global/navigation";
@@ -10,6 +12,8 @@ function FooterLogo() {
   return (
     <Link
       href="/"
+      scroll={true}
+      onClick={() => window.scrollTo({ top: 0 })}
       aria-label={`${site.name} — Home`}
       className="flex items-center gap-2.5"
     >
