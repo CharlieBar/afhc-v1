@@ -47,6 +47,7 @@ function NavDropdown({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!isOpen) return;
     function handleClick(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         onClose();
@@ -54,7 +55,7 @@ function NavDropdown({
     }
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
-  }, [onClose]);
+  }, [isOpen, onClose]);
 
   return (
     <div ref={ref} className="relative">
